@@ -1,0 +1,30 @@
+<div style="padding:20px">
+    <div class="welcome-font">
+        {{'modules.home.title' | translate}}
+    </div>
+    <div class="description">
+        {{'modules.home.subtitle' | translate}}
+    </div>
+    <div class="subtitle">
+        {{'modules.home.info' | translate}}
+    </div>
+    <div class="container-search clearfix">
+        <div class="search-container" style="display:flex; flex-direction: column">
+            <span style="text-align:left;margin-bottom:10px;color:#90a4ae">{{'modules.match-log.player' | translate}}</span>
+            <input style="height:50px" #summonerName type="text" class="form-control"[(ngModel)]="name"  [placeholder]="'Pesquisar Nome'" >
+        </div>
+        <div class="region-container" style="display:flex; flex-direction: column">
+            <span style="text-align:left;margin-bottom:10px;color:#90a4ae">{{'modules.match-log.region' | translate}}</span>
+            <select style="height:50px" [(ngModel)]="region">
+                <option *ngFor="let key of regionList" [value]="key">{{ (key | region) | async  | translate  }}</option>
+            </select>
+        </div>
+    </div>
+    <div style="display: flex;justify-content: center;">
+        <div class="button-search" [routerLink]="['/match']" [queryParams]="{summoner:name, region:region}" style="color:#71b5bd;">
+            {{'modules.match-log.start-search' | translate}}
+        </div>
+    </div>
+  
+</div>
+

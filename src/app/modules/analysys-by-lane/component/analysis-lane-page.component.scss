@@ -1,0 +1,85 @@
+.content-page{
+    padding:20px;
+    margin-top:10px;
+}
+.content-left{
+    border:1px solid #785f5f;
+    border-radius: 10px;
+    color:white;
+}
+.content-right{
+    
+    border:1px solid #785f5f;
+    border-radius: 10px;
+    color:white;
+    // background-color: #1b1b1b;
+    overflow-y:auto;
+    max-height:300px;
+}
+.content-graph{
+    margin-top:10px;
+    border-radius: 10px;
+}
+.container-search{
+    text-align:center; 
+    color:white;
+    width:100%;
+    display:inline-block;
+    display:flex;
+    .search-container
+    {
+        flex-grow: 4;
+        padding:20px;
+        input
+        {
+            border-radius: 6px;
+            color:#979a9f;
+            background-color:#212121;
+            height:100%;
+            font-family: 'Segoe UI'; 
+            border:1px solid #444951
+        }
+    }
+    .region-container{
+        flex-grow: 2;
+        width:20%;
+        padding:20px;
+        select
+        {
+            border-radius: 6px;
+            color:#979a9f;
+            background-color:#212121;
+            height:100%;
+            padding-left: 10px;
+            border:1px solid #444951
+        }
+    }
+
+}
+.img-champion
+{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    border:1px solid; 
+    cursor:pointer;
+}
+
+.img-disabled {
+    -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+  }
+
+
+  .dica{
+    padding: 20px 20px 20px 20px;
+    background-color: #2d3035;
+    color: #8a8d93;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 100%;
+    color: #8a8d93;
+}

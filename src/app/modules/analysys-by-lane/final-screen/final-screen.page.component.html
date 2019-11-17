@@ -1,0 +1,190 @@
+<div class="content">
+        <div class="row dica">
+            Clique no combo e selecione um dos usuários cadastrados na aplicação para fazer a comparação com o campeão escolhido.
+        </div>
+        <div class="row principal">
+            <div class="col-sm-2">
+                    <div style="color: #ffffff;">
+                        {{userInfo?.nome}}<br>
+                        <h6> {{championInf?.nome}}</h6><br>
+                        <img [src]="championInf?.caminhoImagem" style="height:70px; width:70px;border-radius:50%;">
+                    </div>  
+            </div>
+            <div class="col-sm-2" style="color: #ffffff;">
+                    <h6>Últimas {{infoStatus?.totalPartidas}} partidas</h6><br>
+                    <h6>Taxa de vitória: {{infoStatus?.funcao[0]?.taxaDeVitoria*100}}%</h6><br>
+                    <h6>Nota: {{infoStatus?.funcao[0]?.nota}}</h6>
+            </div>
+            <div class="col-sm-4" style="color: #ffffff;">
+                    <div *ngIf="challengerInfo" style="text-align: center;">
+                        <img style="width: 100px; height: 100px;"src="https://img.rankedboost.com/wp-content/uploads/2017/07/Fighter-1.png">
+                    </div>   
+            </div>
+            
+            <div class="col-sm-2" style="color: #ffffff;">
+                <div *ngIf="challengerInfo">
+                    <h6>Últimas {{challengerInfo?.totalPartidas}} partidas</h6><br>
+                    <h6>Taxa de vitória: {{challengerInfo?.funcao[0]?.taxaDeVitoria*100}}%</h6><br>
+                    <h6>Nota: {{challengerInfo?.funcao[0]?.nota}}</h6>
+                </div>
+            </div>
+            <div class="col-sm-2" style="color: #ffffff;">
+                Em relação a:
+                <select [(ngModel)]="challenger" class="input" (change)="getChallengerInfo()">
+                    <option *ngFor="let c of challengerList" [value]="c.accountId"> {{c.nome}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" >
+            <tabset style="width: 100%;">
+                <tab heading="Ouro {{infoStatus?.ouro?.nota}}" id="tab1">
+                    
+                    <div > 
+                            <div class="row content-page" *ngIf="infoStatus && challengerInfo">
+                                    <div class="col-sm-4 content-inside ">
+                                            <div class="titulo">Gráfico </div> 
+                                            <canvas baseChart style="background-color: white"
+                                            [datasets]="radarChartDataOuro"
+                                            [options]="radarChartOptions"
+                                            [labels]="radarChartLabelsOuro"
+                                            [chartType]="radarChartType"
+                                            >
+                                            </canvas>
+                                           
+                                    </div>
+                                    <div class="col-sm-4 content-inside" >
+                                        
+                                            <div tooltip="Quanto de dano é necessário para se obter 1 de Ouro." class="titulo">Dano por Ouro</div>
+                                            <h1>{{infoStatus?.ouro?.danoPorOuro}} vs {{challengerInfo?.ouro?.danoPorOuro}}</h1>           
+                                        
+                                    </div>
+                                    <div class="col-sm-4 content-inside" >
+                                        
+                                            <div tooltip="Diferença da quantidade de Ouro obtida aos quinze minutos do jogador e doseu adversário direto." class="titulo">Vantagem de Ouro aos 15 minutos</div>
+                                            <h1>{{infoStatus?.ouro?.vantagemDeOuro}} vs {{challengerInfo?.ouro?.vantagemDeOuro}}</h1>       
+                                            
+                                    </div>
+                                    
+                                    
+                            </div>
+        
+                            <div class="row content-page" *ngIf="infoStatus && challengerInfo">
+                                    <div class="col-sm-3 content-inside" >
+                                        
+                                            <div tooltip="Diferença da quantidade de CS obtido aos 15 minutos do jogador e doadversário." class="titulo">Vantagem de Cs aos 15 minutos</div>
+                                            <h1>{{infoStatus?.ouro?.vantagemCsAos15}} vs {{challengerInfo?.ouro?.vantagemCsAos15}}</h1>       
+                                            
+                                    </div>
+                                
+                                <div class="col-sm-3 content-inside " >
+                                        
+                                        <div tooltip="Quantidade de CS adquirida por minuto. Comparação direta e um importante fator que revela a experiencia do jogador." class="titulo">Cs por minuto</div>
+                                        <h1>{{infoStatus?.ouro?.csPorMin}} vs {{challengerInfo?.ouro?.csPorMin}}</h1>        
+                                        
+                                </div>
+                                
+                            </div>
+                    </div>
+                    
+                   
+                </tab>
+
+                <tab heading="Combate {{infoStatus?.combate?.nota}}" id="tab2">
+                        
+                        <div class="row content-page" *ngIf="infoStatus && challengerInfo">
+                                <div class="col-sm-4 content-inside">
+                                        <div class="titulo">Gráfico </div> 
+                                            <canvas baseChart style="background-color: white"
+                                            [datasets]="radarChartDataCombate"
+                                            [options]="radarChartOptions"
+                                            [labels]="radarChartLabelsCombate"
+                                            [chartType]="radarChartType"
+                                            >
+                </canvas>
+                                </div>
+                                <div class="col-sm-4 content-inside" >
+                                    
+                                        <div tooltip="Essa porcentagem serve para entender a importância do jogador no número de abates da equipe, ou seja, se contribuiu mais ou menos que seus outros companheiros de tim." class="titulo">Participação em Abates</div>
+                                        <h1>{{infoStatus?.combate?.participacaoAbates*100}}% vs {{challengerInfo?.combate?.participacaoAbates*100}}%</h1>        
+                                    
+                                </div>
+                                <div class="col-sm-4 content-inside" >
+                                    
+                                        <div tooltip="Esse dado ajuda a entender quem foi o carry do time." class="titulo">Dano compartilhado</div>
+                                        <h1>{{infoStatus?.combate?.danoCompartilhado*100}}% vs {{challengerInfo?.combate?.danoCompartilhado*100}}%</h1>          
+                                        
+                                </div>
+                                
+                                
+                        </div>
+
+                        <div class="row content-page" *ngIf="infoStatus && challengerInfo">
+                                <div class="col-sm-4 content-inside" >
+                                    
+                                        <div tooltip="Sinaliza que o usuário está obtendo muitos abates sem contribuir no dano ou o contrário." class="titulo">Dano por Morte</div>
+                                        <h1>{{infoStatus?.combate?.danoPorMorte}} vs {{challengerInfo?.combate?.danoPorMorte}}</h1>        
+                                        
+                                </div>
+                            <div class="col-sm-4 content-inside" >
+                                    
+                                    <div tooltip="É o fator mais importante para os jogadores na função de suporte pois seu desempenho na partida é medido através desse indicador." class="titulo">Pontuação de Utilidade</div>
+                                    <h1>{{infoStatus?.combate?.pontuacaoDeUtilidade}} vs {{challengerInfo?.combate?.pontuacaoDeUtilidade}} </h1>         
+                                        
+                            </div>
+                            <div class="col-sm-4 content-inside" >
+                                    
+                                    <div tooltip="Média do desempenho nas partidas levando em conta seu número de abates,mortes e assistências. Fator mais importante do estilo Combate, evidencia principalmente se o jogador é bom dominar seus adversários." class="titulo">Relação de Ama</div>
+                                    <h1>{{infoStatus?.mediaKda}} vs {{challengerInfo?.mediaKda}}        </h1>
+                                    
+                            </div>
+                           
+                        </div>
+
+
+                </tab>
+
+
+                <tab heading="Visão {{infoStatus?.visao?.nota}}" id="tab2" >
+                        <div class="row content-page" *ngIf="infoStatus && challengerInfo">
+                                <div class="col-sm-4 content-inside">
+                                        <div class="titulo">Gráfico </div> 
+                                            <canvas baseChart style="background-color: white"
+                                            [datasets]="radarChartDataVisao"
+                                            [options]="radarChartOptions"
+                                            [labels]="radarChartLabelsVisao"
+                                            [chartType]="radarChartType"
+                                            >
+                </canvas>
+                                </div>
+                                <div class="col-sm-4 content-inside" >
+                                        <div tooltip="Divisão dos objetivos que o jogador participou sobre o total de objetivos acumulados pela equipe. É importante para saber se o usuário participa junto com a equipe." class="titulo">Controle de Objetivo</div>
+                                        <h1>{{infoStatus?.visao?.controleDeObjetivo*100}}% vs {{challengerInfo?.visao?.controleDeObjetivo*100}}%        </h1>
+                                    
+                                </div>
+                                <div class="col-sm-4 content-inside" >
+                                        <div tooltip="Divisão feita com o número de sentinelas colocadas sobre o total da equipe" class="titulo">Relação de Wards</div>
+                                        <h1>{{infoStatus?.visao?.relacaoDeWard*100}}% vs {{challengerInfo?.visao?.relacaoDeWard*100}}%         </h1>
+                                        
+                                </div>
+                                
+                        </div>
+
+                        <div class="row content-page" *ngIf="infoStatus && challengerInfo">
+                                <div class="col-sm-4 content-inside" >
+                                        <div tooltip="Serve para estabelecer a vantagem inicial do jogador sobre seu adversário.Quanto melhor for o AMA no início prova a superioridade do jogador no um contra um." class="titulo">AMA aos 15 minutos de jogo</div>
+                                        <h1>{{infoStatus?.visao?.kdaAos15min}} vs {{challengerInfo?.visao?.kdaAos15min}}        </h1>
+                                        
+                                </div>  
+                            
+                            <div class="col-sm-4 content-inside" >
+                                    <div tooltip="É a quantidade de abates do jogador, dividido pelos objetivos da equipe.Importante análise que verifica se os abates do jogador se convertem em obtenção de algum objetivo do jogo." class="titulo">Conversão de Abates</div>
+                                    <h1>{{infoStatus?.visao?.conversaoDeAbates}} vs {{challengerInfo?.visao?.conversaoDeAbates}} </h1>
+                                        
+                            </div>
+                            
+                        </div>
+
+                </tab>
+            </tabset>
+        </div>
+</div>

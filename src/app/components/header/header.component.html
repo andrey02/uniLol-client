@@ -1,0 +1,60 @@
+<nav class="main-menu">
+    <ul>
+        <li>
+            <a [routerLink]="['/home']">
+                <i class="fa fa-home fa-2x"></i>
+                <span class="nav-text">
+                    Início
+                </span>
+            </a>
+        
+        </li>
+        <li>
+            <a [routerLink]="['/match']">
+                <i class="fa fa-gamepad fa-2x"></i>
+                <span class="nav-text">
+                    {{'header.game-register' | translate }}
+                </span>
+            </a>
+        
+        </li>
+        <li>
+            <a [routerLink]="['/champion']">
+                <i class="fa fa-user fa-2x"></i>
+                <span class="nav-text">
+                    {{'header.champion' | translate }}
+                </span>
+            </a>
+        
+        </li>
+        <li class="has-subnav">
+            <a [routerLink]="['/analysis']">
+                <i class="fa fa-line-chart fa-2x"></i>
+                <span class="nav-text">
+                    Análise
+                </span>
+            </a>
+            
+        </li>
+        <li class="has-subnav">
+            <a [routerLink]="['/building']">
+                <i class="fa fa-clock-o fa-2x"></i>
+                <span class="nav-text">
+                    Em construção
+                </span>
+            </a>
+        </li>
+    </ul>
+    
+
+</nav>
+
+<header>
+    <div class="header">
+        <select class="form-control select-form-language" style="" [(ngModel)]="languageSelected" (change)="languageService.reloadLanguage(languageSelected)">
+            <option [value]="'__default__'">Selecione</option>
+            <option [value]="'pt-br'">PT-BR</option>
+            <option [value]="'en-us'">EN-US</option>
+        </select>
+    </div>
+</header>

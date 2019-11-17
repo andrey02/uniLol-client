@@ -1,0 +1,115 @@
+.modal-unilol {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 170;
+    opacity: 1!important;
+    visibility: visible;
+    transition-delay: 0s;
+    background-color: #19044294;
+}
+
+.modal-unilol-content {
+    padding: 10px;
+    max-width: 1000px;
+    min-width: 600px;
+    max-height: 85%;
+    overflow: auto;
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    z-index: 2;
+    border: 1px solid;
+    border-radius: 3px;
+    // color: #71b5bd;
+    background: #131313c7;
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition-delay: 0.5s;
+}
+
+.modal-unilol-content img {
+    display: block;
+    // width: 100%;
+    margin: 10px 0 0;
+}
+
+.modal-unilol-content p {
+    padding-top: 10px;
+    text-align: justify;
+}
+.modal-unilol-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+  
+.modal-unilol-close:after {
+    content: "X";
+    float: right;
+    margin: 5px 5px 0 0;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 20px;
+    box-shadow: 0 0 3px #000;
+}
+.info{
+    color:gray;
+    text-align:center;
+    // border-top: 1px solid;
+}
+.title{
+    text-align: center;
+    color: #71b5bd;
+    padding: 10px;
+    border-bottom: 1px solid;
+}
+.close{
+    float: right;
+    font-size: 8px;
+    border-radius: 50%;
+    border: 1px solid;
+    padding: 5px;
+    color: white;
+    background: gray;
+    cursor:pointer;
+    &:hover{
+        background-color:white;
+        color:black;
+    }
+}
+.img-style{
+    height: 80px;
+    width: 80px;
+    border: 7px solid;
+    border-radius: 50%;
+    padding: 6px;
+}
+// div.modal-unilol {
+//     opacity: 1;
+//     visibility: visible;
+//     -webkit-transition-delay: 0s;
+//     -ms-transition-delay: 0s;
+//     transition-delay: 0s;
+// }
+
+// div.modal .modal-content {
+//     opacity: 1;
+//     -webkit-transform: translate(-50%, 0);
+//     -ms-transform: translate(-50%, 0);
+//     transform: translate(-50%, 0);
+//     -webkit-transition-delay: 0.5s;
+//     -ms-transition-delay: 0.5s;
+//     transition-delay: 0.5s;
+// }

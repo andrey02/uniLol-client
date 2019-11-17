@@ -1,0 +1,247 @@
+<div class="main-container">
+    <tabset>
+        <tab heading="TimeLine" id="tab1" class="customclass">
+            <div class="custom-scrool-bar timeline-content" >
+                
+                <ul class="timeline" *ngFor="let evento of eventosDaPartida;let indexEvento = index">
+                    <li *ngIf="indexEvento % 2 == 0">
+                        <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title" style="color:#8af2fd">
+                                    <span *ngIf="evento.tipo == 'CHAMPION_KILL'">Morte de Campeão</span>
+                                    <span *ngIf="evento.tipo == 'WARD_PLACED'">Espião colocado no campo inimigo !</span>  
+                                    <span *ngIf="evento.tipo == 'ITEM_PURCHASED'">Item Adquirido :)</span>
+                                    <span *ngIf="evento.tipo == 'BUILDING_KILL'">A Torre Caiu !</span>
+                                    <span *ngIf="evento.tipo == 'SKILL_LEVEL_UP'">Level Up [+1]</span>
+                                    <span *ngIf="evento.tipo == 'ELITE_MONSTER_KILL'">Monstro abatido \o/</span>
+                                </h4>
+                                <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{transform(evento.tempo)}}</small></p>
+                            </div>
+                            <div class="timeline-body">
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'CHAMPION_KILL'&& (evento.participantId-1) >= 0"> 
+                                    <span *ngIf="(evento.killerId-1) >= 0"><img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.killerId-1].campeao?.caminhoImagem">
+                                        O jogador 
+                                        <strong>{{getNomeParticipant(evento.killerId)}}</strong> utilizando o campeão {{participantes[evento.killerId-1].campeao?.nome}}
+                                        abateu o inimigo <strong>{{getNomeParticipant(evento.victimId )}} </strong> que usava o campeão
+                                        {{participantes[evento.victimId-1].campeao?.nome}}
+                                    <img style="width:35px; height:35px" [src]="participantes[evento.victimId-1].campeao?.caminhoImagem">
+                                    </span>
+                                </p>
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'WARD_PLACED' && (evento.participantId-1) >= 0">
+                                    <span *ngIf="(evento.participantId-1) >= 0">
+                                        <img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.participantId-1].campeao?.caminhoImagem">
+                                    </span> 
+                                    Atenção o jogador <strong>{{getNomeParticipant(evento.participantId)}}</strong> usando o campeão 
+                                    <strong>{{participantes[evento.participantId-1].campeao?.nome}} </strong>
+                                    colocou uma ward. As wards são utilizadas para espionar o campo do inimigo. Atenção quando são colocadas em jogo ! :)
+                                </p>
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'ITEM_PURCHASED'&& (evento.participantId-1) >= 0">
+                                    <span *ngIf="(evento.participantId-1) >= 0">
+                                        <img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.participantId-1].campeao?.caminhoImagem">
+                                    </span> 
+                                    O jogador  {{  getNomeParticipant(evento.participantId-1) }}  comprou o item 
+                                   
+                                    <br>
+                                    <br>
+                                    <span style="text-align: center">
+                                        <img style="width:70px; height:70px; border-radius:50px;border:1px solid;" [src]="evento.item?.caminhoImagem">
+                                        {{ evento.item.nome | translate}} 
+                                    </span>
+                                </p>
+                               
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'BUILDING_KILL' && (evento.participantId-1) >= 0"> 
+                                    <span *ngIf="(evento.killerId-1) >= 0">
+                                        <img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.killerId-1].campeao?.caminhoImagem">
+                                        Torre {{evento.turretType}} derrubada pelo jogador <strong>{{getNomeParticipant(evento.killerId-1)}} </strong> 
+                                        na 
+                                        {{evento.laneType}} do mapa ! 
+                                    </span> 
+                                </p>
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'SKILL_LEVEL_UP' && (evento.participantId-1) >= 0"> <span *ngIf="(evento.participantId-1) >= 0"><img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.participantId-1].campeao?.caminhoImagem"></span> 
+                                    O jogador <strong>{{getNomeParticipant(evento.participantId-1 )}}</strong> aumentou o nível de uma habilidade de seu campeão 
+                                    {{participantes[evento.participantId-1].campeao?.nome}}
+                                </p>
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'ELITE_MONSTER_KILL' && (evento.participantId-1) >= 0">  
+                                    <span *ngIf="(evento.killerId-1) >= 0">
+                                        <img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.killerId-1].campeao?.caminhoImagem">
+                                    </span> 
+                                    O jogador <strong>{{getNomeParticipant(evento.participantId)}}</strong> derrotou o monstro 
+                                    {{evento.monsterSubType == null ? 'Baron Nashor': evento.monsterSubType}} aumentando assim as chances de vitória de sua equipe!
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-inverted"*ngIf="indexEvento % 2 != 0" >
+                        <div class="timeline-badge warning"></div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title" style="color:#8af2fd">
+                                    <span *ngIf="evento.tipo == 'CHAMPION_KILL'">Morte de Campeão</span>
+                                    <span *ngIf="evento.tipo == 'WARD_PLACED'">Espião colocado no campo inimigo !</span>  
+                                    <span *ngIf="evento.tipo == 'ITEM_PURCHASED'">Item Adquirido :)</span>
+                                    <span *ngIf="evento.tipo == 'BUILDING_KILL'">A Torre Caiu !</span>
+                                    <span *ngIf="evento.tipo == 'SKILL_LEVEL_UP'">Level Up [+1]</span>
+                                    <span *ngIf="evento.tipo == 'ELITE_MONSTER_KILL'">Monstro abatido \o/</span>
+                                </h4>
+                                <p><small class="text-muted" style="color:#71b5bd"><i class="glyphicon glyphicon-time"></i> {{transform(evento.tempo)}}</small></p>
+                            </div>
+                            <div class="timeline-body">
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'CHAMPION_KILL'&& (evento.participantId-1) >= 0"> 
+                                    <span *ngIf="(evento.killerId-1) >= 0"><img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.killerId-1].campeao?.caminhoImagem">
+                                        O jogador 
+                                        <strong>{{getNomeParticipant(evento.killerId)}}</strong> utilizando o campeão {{participantes[evento.killerId-1].campeao?.nome}}
+                                        abateu o inimigo <strong>{{getNomeParticipant(evento.victimId )}} </strong> que usava o campeão
+                                        {{participantes[evento.victimId-1].campeao?.nome}}
+                                    <img style="width:35px; height:35px" [src]="participantes[evento.victimId-1].campeao?.caminhoImagem">
+                                    </span>
+                                </p>
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'WARD_PLACED' && evento.participantId - 1 >= 0 ">
+                                    <span *ngIf="(evento.participantId-1) >= 0">
+                                        <img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.participantId-1].campeao?.caminhoImagem">
+                                    </span> 
+                                    Atenção o jogador <strong *ngIf="participantes[evento.participantId-1].participantId != null">{{getNomeParticipant(participantes[evento.participantId-1].participantId )}}</strong> usando o campeão 
+                                    <strong>{{participantes[evento.participantId-1].campeao?.nome}} </strong>
+                                    colocou uma ward. As wards são utilizadas para espionar o campo do inimigo. Atenção quando são colocadas em jogo ! :)
+                                </p>
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'ITEM_PURCHASED' && (evento.participantId-1) >= 0">
+                                    <span *ngIf="(evento.participantId-1) >= 0">
+                                        <img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.participantId-1].campeao?.caminhoImagem">
+                                    </span> 
+                                    O jogador  {{ getNomeParticipant(participantes[evento.participantId-1].participantId) }}  comprou o item 
+                                    
+                                    <br>
+                                    <br>
+                                    <span style="text-align: center">
+                                        <img style="width:70px; height:70px; border-radius:50px;border:1px solid;" [src]="evento.item?.caminhoImagem">
+                                        {{ evento.item.nome | translate}} 
+                                    </span>
+                                </p>
+                                
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'BUILDING_KILL' && (evento.participantId-1) >= 0"> 
+                                    <span *ngIf="(evento.killerId-1) >= 0">
+                                        <img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.killerId-1].campeao?.caminhoImagem">
+                                        Torre {{evento.turretType}} derrubada pelo jogador <strong>{{getNomeParticipant(evento.killerId-1)}} </strong> 
+                                        na 
+                                        {{evento.laneType}} do mapa ! 
+                                    </span> 
+                                </p>
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'SKILL_LEVEL_UP' && (evento.participantId-1) >= 0 "> <span *ngIf="(evento.participantId-1) >= 0"><img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.participantId-1].campeao?.caminhoImagem"></span> 
+                                    O jogador <strong>{{getNomeParticipant(participantes[evento.participantId-1].participantId )}}</strong> aumentou o nível de uma habilidade de seu campeão 
+                                    {{participantes[evento.participantId-1].campeao?.nome}}
+                                </p>
+                                <p style="color:#c9aa71;" *ngIf="evento.tipo == 'ELITE_MONSTER_KILL' && (evento.participantId-1) >= 0">  
+                                    <span *ngIf="(evento.killerId-1) >= 0">
+                                        <img style="width:35px; height:35px;border-radius:50%;" [src]="participantes[evento.killerId-1].campeao?.caminhoImagem">
+                                    </span> 
+                                    O jogador <strong>{{getNomeParticipant(evento.participantId)}}</strong> derrotou o monstro 
+                                    {{evento.monsterSubType == null ? 'Baron Nashor': evento.monsterSubType}} aumentando assim as chances de vitória de sua equipe!
+                                </p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </tab>
+
+        <tab heading="Mapa">
+            <div class="card-user">
+                <!-- <h5 style="color:#2e6da4"> -->
+                    Selecione um dos jogadores para analizar suas posições no mapa, e assim saber quais são as suas lanes mais comuns, e seus comportamentos em jogo!
+                <!-- </h5> -->
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-3"> 
+                    <div class="card-user">
+                        Time Azul
+                    </div>         
+                    <div class="content-map custom-scrool-bar col-sm-12">
+                       
+                        <div *ngFor="let participant of participantes; let i = index;" >
+                            <div *ngIf="participant.time == '100'" class="content-100"(click)="pegarPosicaoPorPartidaEUsuario(matchId,participant.usuario?.accountId)" >
+                                <img  [src]="participant.campeao?.caminhoImagem">
+                                <strong>{{participant.usuario?.nome}} </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" >
+                    <!--informaçoes do Mapa, apenas do ultimo participante clicado na imagem-->
+                    <div id="map" style="text-align: center;">
+        
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card-user">
+                        Time Vermelho
+                    </div>
+                    <div class="content-map custom-scrool-bar col-sm-12">
+                       
+                        <div *ngFor="let participant of participantes ; let i = index;">
+                            <div *ngIf="participant.time == '200'" class="content-200" (click)="pegarPosicaoPorPartidaEUsuario(matchId,participant.usuario?.accountId)">
+                                <img  [src]="participant.campeao?.caminhoImagem">
+                                <strong>{{participant.usuario?.nome}}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+           
+        </tab>
+
+        <tab heading="Gráfico">
+            <div style="display:flex;">
+                <div class="card-user" style="display: flex;flex-basis:500px;flex-grow:1">
+                    <!--informaçoes dos participantes-->            
+                    <div style="flex-grow:1;display:flex;flex-direction: column;margin:10px">
+                        <div *ngFor="let participant of participantes; let i = index;" >
+                            <div *ngIf="participant.time == '100'">
+                                
+                                <label class="container">
+                                    <div style="font-size:12px">
+                                        {{participant.usuario?.nome}}
+                                    </div> 
+                                    <input type="checkbox" checked="checked" (change)="formData[i].check = !formData[i].check;gerarGrafico()" [checked] = "formData[i].check">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div *ngIf="participant.time == '200'">
+                                <label class="container">
+                                    <div style="font-size:12px">
+                                        {{participant.usuario?.nome}}
+                                    </div>
+                                        
+                                    <input type="checkbox" checked="checked" (change)="formData[i].check = !formData[i].check;gerarGrafico()" [checked] = "formData[i].check">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-user" style="display: flex;flex-grow:1">
+                        <!--informaçoes do Gráfico, pega array-->
+                        <div id="grafico">
+                        <google-chart [data]="chart"> </google-chart>
+                    </div>
+                    <!--informaçoes dos timelineData-->            
+                    <div style="flex-grow:1;display:flex;flex-direction: column;margin:10px">
+                        
+                        <div>
+                            <form action="" (change)="gerarGrafico()">
+                                <input type="radio" [(ngModel)]="model.data"  name="data" value="level" >Nivel<br>
+                                <input type="radio" [(ngModel)]="model.data"  name="data" value="ouro">Ouro<br>
+                                <input type="radio" [(ngModel)]="model.data"  name="data" value="ouroAdquirido">Ouro adquirido<br>
+                                <input type="radio" [(ngModel)]="model.data"  name="data" value="qtdCreep">Quantidade de Minions<br>
+                                <input type="radio" [(ngModel)]="model.data"  name="data" value="experiencia">Experiencia<br>
+                                <input type="radio" [(ngModel)]="model.data"  name="data" value="qtdMonstroNeutro">Monstros neutros abatidos
+                            </form>
+                        </div>   
+                    </div>
+                </div>
+                
+            </div>
+        </tab>
+    </tabset>
+</div>

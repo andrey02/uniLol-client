@@ -1,0 +1,49 @@
+<div class="content-list">
+    <h2 class="title">Campeões</h2>
+
+    <div class="main custom-scrool-bar">
+        <div class="content-img" >
+            <div class="content-div" *ngFor="let champion of listChampions"  (click)="selectChampion(champion)"> 
+                <img [src]="champion.campeao.caminhoImagem">
+                <h5>{{champion.campeao.nome}}</h5>
+            </div>
+        </div>    
+    </div>
+    <div class="champion-selected" *ngIf="championSelected != null">
+        <div class="img-champion">
+            <img [src]="championSelected.campeao.caminhoImagem">
+            <h5 >{{championSelected.campeao.nome}}</h5>
+        </div>
+       
+        <div class="dificuldade">
+            <h5>Nível Campeão</h5>
+            <div>
+                <circle-progress
+                    [percent]="(championSelected.campeaoDetails.difficultyRating * 100)/10"
+                ></circle-progress>
+            </div>
+            
+        </div>
+        <div class="text-champion">
+                <div class="margin-top-text">
+                    <h5>Dicas do Campeão</h5>
+                    <div>
+                        <div *ngFor="let tricks of championSelected?.campeaoDetails.allyTips">
+                            {{tricks}}
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="margin-top-text">
+                    <h5>Desvantagens</h5>
+                    <div>
+                        <div *ngFor="let tricks of championSelected?.campeaoDetails.enemyTips">
+                            {{tricks}}
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+    </div>
+   
+</div>

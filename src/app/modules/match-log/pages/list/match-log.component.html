@@ -1,0 +1,196 @@
+<div class="main-container background-image-page" >
+    <div class="container-search clearfix">
+        <div class="search-container" style="display:flex; flex-direction: column">
+            <span style="text-align:left;margin-bottom:10px;color:#90a4ae">{{'modules.match-log.player' | translate}}</span>
+            <input #summonerName [disabled]="isLoading" (keyup.enter)="acharPartidaUsuario(searchName, searchRegion)" type="text" class="form-control"[(ngModel)]="searchName"  [placeholder]="'Pesquisar Nome'" >
+        </div>
+        <div class="region-container" style="display:flex; flex-direction: column">
+            <span style="text-align:left;margin-bottom:10px;color:#90a4ae">{{'modules.match-log.region' | translate}}</span>
+            <select [(ngModel)]="searchRegion" [disabled]="isLoading"  (change)="acharPartidaUsuario(searchName, searchRegion)">
+                <option *ngFor="let key of regionList" [value]="key">{{ (key | region) |async }}</option>
+            </select>
+        </div>
+    </div>
+    <div *ngIf="isLoading" style="margin-left: 46%;margin-top: 10%;">
+        <loading></loading>
+    </div>
+    <div *ngIf="!matchLog && !showResults && !isLoading" style="text-align:center">
+        <h6 class="title-page">
+            {{'modules.match-log.start-search' | translate}} !
+        </h6>
+    </div>
+    <div class="area-card-content" *ngIf="showResults">
+        <div class="card-user small-area" >
+            <div class="card-summoner-basic-info" style="flex-direction: column;">
+                <h3>Partidas Ranqueadas <i class="fa fa-refresh" (updateInfo)="updateInfo()"></i> </h3> 
+                <div style="margin-bottom:20px;">
+                    <img class="shadow" [src]="matchLog.usuario.iconUrl">
+                </div>
+               
+                <div>
+                    Vitórias : {{matchLog.ranqueadaDTO && matchLog.ranqueadaDTO.taxaDeVitoria ? matchLog.ranqueadaDTO.taxaDeVitoria : '--'}}
+                </div>
+                <div>
+                    Derrotas : {{ matchLog.ranqueadaDTO && matchLog.ranqueadaDTO.derrotas ? matchLog.ranqueadaDTO.derrotas : "--" }}
+                </div>
+                <div>
+                    Points : {{ matchLog.ranqueadaDTO && matchLog.ranqueadaDTO.points ? matchLog.ranqueadaDTO.points : "--"}}
+                </div>
+                <div>
+                    <div *ngIf="matchLog.ranqueadaDTO && matchLog.ranqueadaDTO.ranking" >
+                        <img class="class-ranqueada  {{matchLog.ranqueadaDTO.ranking | ranqueada}}">
+                    </div>
+                    Ranking : <strong>{{ matchLog.ranqueadaDTO && matchLog.ranqueadaDTO.ranking ? matchLog.ranqueadaDTO.ranking : "--" }}</strong> 
+                </div>
+                <div style="font-size:11px;" tooltip="Representa a última da data da partida, e até a data de corte, das 20 últimas partidas">
+                    {{matchLog.dataInicial | date }}  -  {{ matchLog.dataFinal | date  }}
+                </div>
+            </div>
+        </div>
+        <div class="content-area-card list-area custom-scrool-bar" *ngIf="matchLog?.partidas.length == 0 || matchLog?.partidas == null">
+            <h6 class="title-page">
+                Aguarde os dados estão sendo carregados
+            </h6>
+        </div>
+        <div class="content-area-card list-area custom-scrool-bar" *ngIf="matchLog?.partidas.length > 0" >
+            <div class="card-user-info-gameplays"  *ngFor="let partida of matchLog?.partidas; let indexPartida = index">
+                <div class="timeline-icon" tooltip="Ir para Timeline" [routerLink]="['/timeline/' + partida.matchId]"  queryParamsHandling="merge" [queryParams] ="{ accountId: matchLog.usuario.accountId }" >
+                    <i class="fa fa-line-chart" aria-hidden="true"></i>
+                </div>
+                <!-- titulos do card -->
+                <div class="title-card">
+                    <div class="champion-column">
+                        Campeão Usado
+                    </div>
+                    <div class="spell-column">
+                        Feitiços
+                    </div>
+                    <div class="rune-column">
+                        Runas
+                    </div>
+                    <div class="gameplay-info-column">
+                        Partida
+                    </div>
+                    <div class="item-column">
+                        Itens
+                    </div>
+                    <div class="time-column">
+                        Times
+                    </div>
+                </div>
+                <!-- conteúdo do card -->
+                <div class="content-info">
+                    <!-- Area da imagem do campeão -->
+                    <div class="area-img">
+                        <div *ngIf="!partida.isLoadingChampion">
+                            <img tooltip="{{partida?.campeaoDTO?.nome}}"  class="img-champion" src="{{partida?.campeaoDTO?.caminhoImagem}}" >
+                        </div>
+                        <div style="text-align:center;margin-top: 13px;">
+                            <div  *ngIf="partida.resultado == 'global.victory'" class="label-victory">
+                                {{partida.resultado | translate}}
+                            </div>
+                            <div *ngIf="partida.resultado == 'global.defeat'" class="label-defeat">
+                                {{partida.resultado | translate}}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Area dos feitiços -->
+                    <div class="spell-area">
+                        <div *ngFor="let spell of partida.spells" > 
+                            <img tooltip="{{spell.nome | translate}}" (click)="abrirModalSpell('Feitiços', spell.name, spell.caminhoImagem, spell.id)"  [src]="spell.caminhoImagem">
+                        </div>
+                    </div>
+                    <!-- Area das runas -->
+                    <div class="rune-area">
+                        <div *ngFor="let runa of partida.runas; let indexRuna = index">
+                            <div style="cursor:pointer"  (click)="abrirModalRuna('Runa', runa.name, runa.caminhoImagem, runa.runaIdApi)">
+                                <img tooltip="{{runa.name | translate}}" class="img-rune" [src]="runa.caminhoImagem">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!-- area dos dados de partida -->
+                    <div class="match-info">
+                        <div class="" style="">
+                            <div>K/D/A</div>
+                            <div>
+                                <span style="color:orangered">{{partida.morte}} </span> / <span style="color:green">{{partida.abate}}</span> / <span style="color:blue"> {{partida.asistencia}} </span>
+                            </div>
+                        </div>
+                        <div style="color:#e95f71;font-size: 23px;">
+                            <strong>$ <ng2-odometer [number]="partida.goldTotal" [config]="{ animation: 'count', value:0, auto:true}" ></ng2-odometer></strong> 
+                        </div>
+                    </div>
+                    <!-- informações dos itens -->
+                    <div class="build-info">
+                        <ul class='circle-container' >
+                            <li *ngFor="let build of partida.build" (click)="abrirModalItem('Itens', build.name, build.caminhoImagem, build.itemIdApi)" ><img class="img-circle"  tooltip="{{build.name | translate}}"  [src]="build.caminhoImagem"></li>
+                        </ul>
+                    </div>
+                    <!-- informações dos times -->
+                    <div class="team-info">
+                        <div style="flex-grow:1;display:flex;flex-direction: column;margin:10px">
+                            <div style="text-align:center">
+                                <strong>
+                                    Time Azul
+                                </strong>
+                            </div>
+                            <div *ngFor="let participant of partida.participants" >
+                                <div *ngIf="participant.team == '100'" style="text-align: left;padding: 2px;">
+                                    <img style="width:20px; height:20px" [src]="participant?.campeaoDTO?.caminhoImagem">
+                                    {{participant.nome}} 
+                                </div>
+                                <div *ngIf="participant.team == '200'" style="display:none">
+                                </div>
+                            </div>
+                        </div>
+                       <div  style="flex-grow:1;display:flex;flex-direction:column;margin:10px">
+                            <div style="text-align:center">
+                                <strong>
+                                    Time Vermelho
+                                </strong>
+                            </div>
+                            <div *ngFor="let participant of partida.participants">
+                                <div *ngIf="participant.team == '200'" style="text-align: left;padding: 2px;">
+                                    <img style="width:20px; height:20px" [src]="participant?.campeaoDTO?.caminhoImagem">
+                                    {{participant.nome}} 
+                                </div>
+                                <div *ngIf="participant.team == '100'" style="display:none">
+                                </div>
+                            </div>
+                       </div>
+                      
+                    </div>
+                </div>
+                
+                <!-- detalhes das partidas -->
+                <div *ngIf="partida.showDetail" style="margin-bottom:10px">
+
+                    <div *ngIf="partida.loadingDetail" style="text-align:center;justify-content: center; display: flex; flex-direction: column;">
+                        <loading></loading>
+                        Carregando Detalhes da partida...
+                    </div>
+                    <div *ngIf="!partida.loadingDetail" class="title-team-detail">
+                        Time Azul
+                    </div>
+                    <table-region [detailPartida]="partida.detail" [isLoading]="partida.loadingDetail" [typeTeam]="'100'">
+                    </table-region>
+                    <div *ngIf="!partida.loadingDetail" class="title-team-detail">
+                        Time Vermelho
+                    </div>
+                    <table-region [detailPartida]="partida.detail" [isLoading]="partida.loadingDetail"[typeTeam]="'200'">
+                    </table-region>
+                 
+                </div>
+                <!-- icone de abrir o botão dos detalhes -->
+                <div class="icon-down" (click)="showMatch(indexPartida,partida.matchId)">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+   
+    
+</div>
+<modal *ngIf="mostrarModal" [title]="modalInfo.title" [name]="modalInfo.name" [img]="modalInfo.img" [info]="modalInfo.info" (close)="closeModal()"></modal>

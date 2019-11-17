@@ -1,0 +1,69 @@
+<div class="row">
+    <div class="container-search clearfix">
+        <div class="search-container" style="display:flex; flex-direction: column">
+            <span style="text-align:left;margin-bottom:10px;color:#90a4ae">{{'modules.match-log.player' | translate}}</span>
+            <input #summonerName [disabled]="isLoading" (keyup.enter)="acharPartidaUsuario(searchName, searchRegion)" type="text" class="form-control"[(ngModel)]="searchName"  [placeholder]="'Pesquisar Nome'" >
+        </div>
+        <div class="region-container" style="display:flex; flex-direction: column">
+            <span style="text-align:left;margin-bottom:10px;color:#90a4ae">{{'modules.match-log.region' | translate}}</span>
+            <select [(ngModel)]="searchRegion" [disabled]="isLoading"  (change)="acharPartidaUsuario(searchName, searchRegion)">
+                <option *ngFor="let key of regionList" [value]="key">{{ (key | region) |async }}</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row dica">
+        Pesquise por um usuário armazenado na aplicação e vizualize suas estatísticas gerais. Após isso clique em um campeão habilitado para ir para a próxima tela
+    </div>
+<div *ngIf="isLoading" style="margin-left: 46%;margin-top: 10%;">
+    <loading></loading>
+</div>
+
+<div class="row content-page" *ngIf="showUserInfo.status != 'initial'">
+    <div class="col-sm-4 content-left">
+        <div class="content-graph">
+            <div style="display: block; ">
+                <h5 style="text-align:center;"> ESTILO DE JOGO </h5>
+                <canvas baseChart style="background-color: white"
+                    [datasets]="radarChartData"
+                    [options]="radarChartOptions"
+                    [labels]="radarChartLabels"
+                    [chartType]="radarChartType"
+                    >
+                </canvas>
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <strong> Partidas jogadas: </strong> {{listInfoByLaneUser.totalPartidas}} <br>
+            <strong> Tempo Jogado: </strong> {{listInfoByLaneUser.tempoJogado}} minutos <br>
+            <strong> Relação de AMA: </strong> {{listInfoByLaneUser.mediaKda}} <br>
+
+            
+        </div>
+    </div>
+    <div class="col-sm-8 content-right" >
+        <div class="row" *ngFor="let funcao of listInfoByLaneUser.funcao" style="padding:10px;">
+            <div class="col-sm-2" style="margin-bottom:10px; margin-top:10px;">
+                <div >
+                    <img class="img-champion" tooltip ="Meio" *ngIf="funcao?.funcao == 'MIDDLE'" src="https://s3.amazonaws.com/solomid-resources/probuilds/img/lanes/midLane.png">
+                    <img class="img-champion" tooltip ="Topo" *ngIf="funcao?.funcao == 'TOP'" src="https://s3.amazonaws.com/solomid-resources/probuilds/img/lanes/topLane.png">
+                    <img class="img-champion" tooltip ="Selva" *ngIf="funcao?.funcao == 'JUNGLE'" src="https://s3.amazonaws.com/solomid-resources/probuilds/img/lanes/jungle.png">
+                    <img class="img-champion" tooltip ="Atirador" *ngIf="funcao?.funcao == 'DUO_CARRY'" src="https://s3.amazonaws.com/solomid-resources/probuilds/img/lanes/botLane.png">
+                    <img class="img-champion" tooltip ="Suporte" *ngIf="funcao?.funcao == 'DUO_SUPPORT'" src="https://s3.amazonaws.com/solomid-resources/probuilds/img/lanes/support.png">
+                </div>
+                Nota: {{funcao.nota}}<br> 
+                Taxa de vitoria: {{funcao.taxaDeVitoria*100.0}}% 
+            </div>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-1" style="padding-left: 10px" *ngFor="let partida of funcao.partidasDoUsuario" (click)="partida.repetido > 1 ? redirectNew(partida) : null">
+                        <img class="img-champion {{partida.repetido > 1 ? '' : 'img-disabled' }}" tooltip ="numero de partidas: {{partida.repetido}}" [src]="partida.campeao.caminhoImagem"><br>
+                        {{partida.campeao.nome}}
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,21 @@
+<div class="modal-unilol">
+    <div class="modal-unilol-content">
+        <h4 class="title">{{title}}  
+            <span (click)="fecharModal()" class="close"> X </span>
+        </h4>
+        <div style="display: flex; justify-content: center;">
+            <img [src]="img" *ngIf="img != null"  class="img-style">
+        </div>
+        
+        <div class="info">
+            <h3>
+                {{name}}
+            </h3>
+            <div class="info">
+                {{info}}
+            </div>
+        </div> 
+       
+    </div>
+    <label class="modal-close-unilol" for="modal_chaves"></label>
+</div>

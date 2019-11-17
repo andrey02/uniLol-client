@@ -1,0 +1,5 @@
+
+{
+"production": true,
+"mainApiUrl": "http://localhost:8080/unilol"
+}

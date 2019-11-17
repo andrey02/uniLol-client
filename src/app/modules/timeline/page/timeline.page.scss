@@ -1,0 +1,426 @@
+.main-container
+{
+    height:100%;
+    padding:20px;
+    font-family: 'Segoe UI';
+    .container-search{
+        text-align:center; 
+        color:white;
+        width:100%;
+        display:inline-block;
+        display:flex;
+        // width:100%;
+        // height: 78px;
+        .search-container
+        {
+            flex-grow: 4;
+            // background-color:#EEEEEE;
+            // width:50%;
+            // float:left;
+            padding:20px;
+            input
+            {
+                border-radius: 6px;
+                color:#979a9f;
+                background-color:#212121;
+                height:100%;
+                font-family: 'Segoe UI'; 
+                border:1px solid #444951
+            }
+        }
+        .region-container{
+            flex-grow: 2;
+            // background-color:#EEEEEE;
+            // float:right;
+            width:20%;
+            padding:20px;
+            select
+            {
+                border-radius: 6px;
+                color:#979a9f;
+                background-color:#212121;
+                height:100%;
+                padding-left: 10px;
+                border:1px solid #444951
+            }
+        }
+
+    }
+   
+}
+.title-page
+{
+    font-family:open sans,helvetica neue,Helvetica,Arial,sans-serif; 
+    color:#90a4ae;
+    padding-left: 20px;
+}
+.content-area-card
+{
+    display:flex; 
+    flex-direction: column; 
+    padding-left: 20px;
+}
+.card-user
+{
+  padding: 20px 20px 20px 20px;
+  background-color: #2d3035;
+  color: #8a8d93;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 100%;
+  // font-size: 9px;
+  color: #8a8d93
+}
+
+.name-champion{
+    // text-align: center;
+    font-weight: 600;
+    color:#864DD9;
+    margin-top: 10px;
+    font-family: 'Open Sans';
+}
+
+@mixin background-properties()
+{
+    background-position: center;
+    background-repeat: no-repeat;
+    height:100px;
+    width:100px;
+    border:2px solid;
+
+}
+.img-champion{
+    border-radius: 20px;
+
+    @include background-properties();
+}
+.img-champion-participants{
+    width: 3rem !important;
+    height: 3rem !important;
+    @include background-properties();
+}
+
+
+@mixin label-badge($color, $font-color)
+{
+    background-color:$color;
+    color:$font-color;
+    padding:5px;
+    font-size:12px;
+    width:100px;
+    border-radius:10px;
+}
+.label-victory
+{
+    @include label-badge(#0288d1, #005b9f)
+}
+.label-defeat
+{
+    @include label-badge(#f8bbd0,#8c0032);
+    
+}
+.icon-down
+{
+    text-align: center;
+    cursor: pointer;
+}
+@mixin button
+{
+    padding:5px;
+    text-align:center;
+    font-size: 12px;
+    border-radius: 5px;
+}
+.btn-redirect-timeline
+{
+    @include button();
+    padding: 5px;
+    background-color: #868e96;
+    border-color: #868e96;
+    color: white;
+}
+// timeline
+
+.customclass
+{
+  color: #0f7be7!important;
+  background-color: none!important; 
+  border-color: none!important; 
+}
+.timeline-content
+{
+  // background-color: #40061675;
+  max-height:400px;
+  min-height:400px;
+  overflow-x: hidden!important; 
+  overflow-y:auto;
+  padding:20px;
+}
+
+.timeline {
+    list-style: none;
+    padding: 20px 0 20px;
+    position: relative;
+  }
+  .timeline:before {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 3px;
+    background-color: #c9aa71;
+    left: 50%;
+    margin-left: -1.5px;
+  }
+  .timeline > li {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .timeline > li:before,
+  .timeline > li:after {
+    content: " ";
+    display: table;
+  }
+  .timeline > li:after {
+    clear: both;
+  }
+  .timeline > li:before,
+  .timeline > li:after {
+    content: " ";
+    display: table;
+  }
+  .timeline > li:after {
+    clear: both;
+  }
+  .timeline > li > .timeline-panel {
+    width: 50%;
+    float: left;
+    // border: 1px solid #d4d4d4;
+    border-radius: 2px;
+    padding: 20px;
+    position: relative;
+    -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    background-color: #07021f6b;
+  }
+  .timeline > li.timeline-inverted + li:not(.timeline-inverted),
+  .timeline > li:not(.timeline-inverted) + li.timeline-inverted {
+  margin-top: -60px;
+  }
+  
+  .timeline > li:not(.timeline-inverted) {
+  padding-right:90px;
+  }
+  
+  .timeline > li.timeline-inverted {
+  padding-left:90px;
+  }
+  .timeline > li > .timeline-panel:before {
+    position: absolute;
+    top: 26px;
+    right: -15px;
+    display: inline-block;
+    border-top: 15px solid transparent;
+    border-left: 15px solid #ccc;
+    border-right: 0 solid #ccc;
+    border-bottom: 15px solid transparent;
+    content: " ";
+  }
+  .timeline > li > .timeline-panel:after {
+    position: absolute;
+    top: 27px;
+    right: -14px;
+    display: inline-block;
+    border-top: 14px solid transparent;
+    border-left: 14px solid #fff;
+    border-right: 0 solid #fff;
+    border-bottom: 14px solid transparent;
+    content: " ";
+  }
+  .timeline > li > .timeline-badge {
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.4em;
+    text-align: center;
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    margin-left: -25px;
+    background-color: #c9aa71;
+    z-index: 100;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+  }
+  .timeline > li.timeline-inverted > .timeline-panel {
+    float: right;
+  }
+  .timeline > li.timeline-inverted > .timeline-panel:before {
+    border-left-width: 0;
+    border-right-width: 15px;
+    left: -15px;
+    right: auto;
+  }
+  .timeline > li.timeline-inverted > .timeline-panel:after {
+    border-left-width: 0;
+    border-right-width: 14px;
+    left: -14px;
+    right: auto;
+  }
+  .timeline-badge.primary {
+    background-color: #2e6da4 !important;
+  }
+  .timeline-badge.success {
+    background-color: #3f903f !important;
+  }
+  .timeline-badge.warning {
+    background-color: #c9aa71 !important;
+  }
+  .timeline-badge.danger {
+    background-color: #d9534f !important;
+  }
+  .timeline-badge.info {
+    background-color: #5bc0de !important;
+  }
+  .timeline-title {
+    margin-top: 0;
+    color: inherit;
+  }
+  .timeline-body > p,
+  .timeline-body > ul {
+    margin-bottom: 0;
+  }
+  .timeline-body > p + p {
+    margin-top: 5px;
+  }
+
+
+
+
+.custom-scrool-bar::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+.custom-scrool-bar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+    
+}
+ 
+.custom-scrool-bar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    background-color: #17a2b8;
+}
+
+.content-map{
+  flex-grow:1;
+  display:flex;
+  flex-direction: column;
+  margin:10px;
+  background-color: #0b06215e;
+  max-height:200px;
+  overflow-y:auto;
+}
+@mixin color-content-time($color)
+{
+  color:$color;
+  cursor:pointer;
+  padding:10px;
+  border-radius:5px;
+  img{
+    width:50px; 
+    height:50px;
+  }
+  &:hover{
+    background-color:#020113;
+  }
+}
+.content-100{
+  @include color-content-time( #635c5c);
+}
+.content-200{
+  @include color-content-time(#635c5c);
+}
+
+.content-map{
+  display:flex;
+  flex-direction: column; 
+  height: 700px; 
+  width: 700px;
+  flex-grow:1;
+}
+
+/* The container */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: 5px;
+  background-color: #cac7c7;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #545399;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

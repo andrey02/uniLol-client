@@ -1,0 +1,66 @@
+<table class="table" style="color:gray" *ngIf="!isLoading">
+    <thead>
+        <tr>
+            <th>
+                {{'modules.match-log.components.table-region.champion-header' | translate}}
+            </th>
+            <th style="text-align:center;">
+                {{'modules.match-log.components.table-region.level-header' | translate}}
+            </th>
+            <th style="text-align:center;">
+                {{'modules.match-log.components.table-region.kill-header' | translate}}
+            </th>
+            <th style="text-align:center;">
+                {{'modules.match-log.components.table-region.assistences-header' | translate}}
+            </th>
+            <th style="text-align:center;">
+                {{'modules.match-log.components.table-region.damage-header' | translate}}
+            </th>
+            <th style="text-align:center;">
+                {{'modules.match-log.components.table-region.items-header' | translate}}
+            </th>
+            <th style="text-align:center;">
+                {{'modules.match-log.components.table-region.gold-header' | translate}}
+            </th>
+            <th style="text-align:center;">
+                {{'modules.match-log.components.table-region.result-header' | translate}}
+            </th>
+        </tr>
+
+        
+    </thead>
+    <tbody>
+        <tr *ngFor="let detail of detailPartida">
+            <th *ngIf="detail.partidaDoUsuario.time ==typeTeam">
+                <img style="width:30px;height:30px;border-radius:50%;" src="{{detail.partidaDoUsuario.campeao.caminhoImagem}}">
+                {{detail.partidaDoUsuario.usuario.nome}}
+            </th>
+            <th *ngIf="detail.partidaDoUsuario.time ==typeTeam" style="text-align:center;">
+                {{detail.detalhePartidaUsuario.nivelCampeao}}
+            </th>
+            <th *ngIf="detail.partidaDoUsuario.time ==typeTeam" style="text-align:center;">
+                {{detail.detalhePartidaUsuario.abate}}
+            </th>
+            <th *ngIf="detail.partidaDoUsuario.time ==typeTeam" style="text-align:center;">
+                {{detail.detalhePartidaUsuario.assistencia}}
+            </th>
+            <th *ngIf="detail.partidaDoUsuario.time ==typeTeam" style="text-align:center;">
+                {{detail.detalhePartidaUsuario.danoCausado}}
+            </th>
+            <th *ngIf="detail.partidaDoUsuario.time ==typeTeam">
+                <img style="width:30px;height:30px;border-radius:50%;" tooltip="{{detail.itemsDaPartidaDoUsuario[0]?.item?.nome | translate}}"  src="{{detail.itemsDaPartidaDoUsuario[0]?.item?.caminhoImagem}}">
+                <img style="width:30px;height:30px;border-radius:50%;" tooltip="{{detail.itemsDaPartidaDoUsuario[0]?.item?.nome | translate}}"  src="{{detail.itemsDaPartidaDoUsuario[1]?.item?.caminhoImagem}}">
+                <img style="width:30px;height:30px;border-radius:50%;" tooltip="{{detail.itemsDaPartidaDoUsuario[0]?.item?.nome | translate}}"  src="{{detail.itemsDaPartidaDoUsuario[2]?.item?.caminhoImagem}}">
+                <img style="width:30px;height:30px;border-radius:50%;" tooltip="{{detail.itemsDaPartidaDoUsuario[0]?.item?.nome | translate}}"  src="{{detail.itemsDaPartidaDoUsuario[3]?.item?.caminhoImagem}}">
+                <img style="width:30px;height:30px;border-radius:50%;" tooltip="{{detail.itemsDaPartidaDoUsuario[0]?.item?.nome | translate}}"  src="{{detail.itemsDaPartidaDoUsuario[4]?.item?.caminhoImagem}}">
+            </th>
+            <th *ngIf="detail.partidaDoUsuario.time ==typeTeam" style="text-align:center;">
+                {{detail.detalhePartidaUsuario.goldTotal}}
+            </th>
+            <th *ngIf="detail.partidaDoUsuario.time ==typeTeam" style="text-align:center;">
+                {{detail.detalhePartidaUsuario.resultado | translate}}
+            </th>
+        </tr>
+    </tbody>
+    
+</table>

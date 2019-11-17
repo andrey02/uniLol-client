@@ -1,0 +1,570 @@
+//mixin
+@mixin distribute-on-circle( 
+  $nb-items,
+  $circle-size,
+  $item-size,
+  $class-for-IE: false
+) {
+  $half-item: ($item-size / 2);
+  $half-parent: ($circle-size / 2);
+  
+  position: relative; /* 1 */
+  width:  $circle-size;
+  height: $circle-size;
+  padding: 0;
+  border-radius: 50%; 
+  list-style: none; /* 2 */ 
+  box-sizing: content-box; /* 3 */ 
+  
+  > * { /* 4 */
+    display: block;
+    position: absolute;
+    top:  50%; 
+    left: 50%;
+    width:  $item-size;
+    height: $item-size;
+    margin: -$half-item;
+  }
+  
+  $angle: (360 / $nb-items);
+  $rot: 0;
+
+  @for $i from 1 through $nb-items {
+    @if not $class-for-IE {
+      > :nth-of-type(#{$i}) {
+        transform: rotate($rot * 1deg) translate($half-parent) rotate($rot * -1deg);
+      }
+    } @else {
+      > .#{$class-for-IE}#{$i} {
+        // If CSS transforms are not supported
+        $mt: sin($rot * pi() / 180) * $half-parent - $half-item;
+        $ml: cos($rot * pi() / 180) * $half-parent - $half-item;
+        margin: $mt 0 0 $ml;
+      }
+    }
+
+    $rot: ($rot + $angle);
+  }
+}
+
+@mixin label-badge($color, $font-color)
+{
+    background-color:$color;
+    color:$font-color;
+    padding:5px;
+    font-size:12px;
+    width:100px;
+    border-radius:10px;
+}
+
+@mixin background-properties()
+{
+    background-position: center;
+    background-repeat: no-repeat;
+    height:100px;
+    width:100px;
+    border:2px solid;
+
+}
+
+@mixin button
+{
+    padding:5px;
+    text-align:center;
+    font-size: 12px;
+    border-radius: 5px;
+}
+
+// conteúdo geral da página
+.main-container
+{
+    
+    height:100%;
+    padding:20px;
+    font-family: 'Segoe UI';
+    // conteúdo do card e seus respectivos valores
+    .title-page
+    {
+        font-family:open sans,helvetica neue,Helvetica,Arial,sans-serif; 
+        color:#90a4ae;
+        padding-left: 20px;
+    }
+    .container-search{
+        text-align:center; 
+        color:white;
+        width:100%;
+        display:inline-block;
+        display:flex;
+        .search-container
+        {
+            flex-grow: 4;
+            padding:20px;
+            input
+            {
+                border-radius: 6px;
+                color:#979a9f;
+                background-color:#212121;
+                height:100%;
+                font-family: 'Segoe UI'; 
+                border:1px solid #444951
+            }
+        }
+        .region-container{
+            flex-grow: 2;
+            width:20%;
+            padding:20px;
+            select
+            {
+                border-radius: 6px;
+                color:#979a9f;
+                background-color:#212121;
+                height:100%;
+                padding-left: 10px;
+                border:1px solid #444951
+            }
+        }
+
+    }
+   
+}
+// cards que aparecem na tela
+.area-card-content
+{
+    width:100%; 
+    display:flex;
+    flex-wrap:wrap;
+    .small-area
+    {
+        flex-grow:1;
+        flex-basis:150px;
+        .card-summoner-basic-info
+        {
+            display:flex;
+            text-align: center;
+            align-items: center;
+            img 
+            {
+                max-width: 100px;
+                max-height: 100px;
+                border-radius: 50%;
+                background-position: center;
+                text-align: center;
+                align-self: center;
+                // margin-left: 48px;
+            }
+        }
+    }
+    .list-area
+    {
+        flex-grow:2;
+    }
+    .content-area-card
+    {
+        display:flex; 
+        flex-direction: column; 
+        padding-left: 20px;
+        max-height: 500px;
+        overflow-y: auto;
+    }
+}
+
+.card-user
+{
+    padding: 20px 20px 0px 20px;
+    background-color: #2d3035;
+    color: #8a8d93;
+    margin-bottom: 30px;
+    border-radius:5px;
+    color: #8a8d93;
+}
+// titulo do nome dos campeões
+.name-champion{
+    font-weight: 600;
+    color:#864DD9;
+    margin-top: 10px;
+    font-family: 'Open Sans';
+}
+
+// propriedades das imagens dos campeões
+.img-champion{
+    cursor:pointer;
+    padding:5px;
+    border-radius: 50%;
+    @include background-properties();
+}
+.img-champion-participants{
+    width: 3rem !important;
+    height: 3rem !important;
+    @include background-properties();
+}
+
+// labels dos campeões
+.label-victory
+{
+    @include label-badge(#0288d1, white)
+}
+.label-defeat
+{
+    @include label-badge(#8c0032, #f8bbd0);
+    
+}
+// o icone que expande os itens da time line
+.icon-down
+{
+    text-align: center;
+    cursor: pointer;
+    margin-top: 5px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #676262;
+    &:hover{
+        background-color: #444444;
+        
+    }
+}
+// botão para redirecionar para a timeline
+.btn-redirect-timeline
+{
+    @include button();
+    padding: 5px;
+    background-color: #868e96;
+    border-color: #868e96;
+    color: white;
+}
+// css do circulo da build
+.circle-container {
+    @include distribute-on-circle(7, 6em, 2em, false); 
+    position: relative;
+    width: 6em;
+    height: none;
+    padding: 0;
+    border-radius: 0;
+    box-sizing: none;
+    
+}
+
+.circle-container img { 
+  display: block; 
+  width: 100%; 
+  border-radius: 50%;
+}
+
+
+.circle-container-rune {
+    @include distribute-on-circle(3, 6em, 2em, false); 
+    position: relative;
+    width: 6em;
+    height: none;
+    padding: 0;
+    border-radius: 0;
+    box-sizing: none;
+}
+.img-circle{
+    padding:2px;
+    border:2px solid;
+    cursor:pointer;
+    &:hover{
+        background-color: #1b1b1b;
+        -webkit-filter: saturate(200%); /* Safari 6.0 - 9.0 */
+        filter: saturate(200%);
+        box-shadow:0 4px 8px 0 #615454, 0 6px 20px 0 #8a7777;
+    }
+}
+// imagens de plano de fundo
+.background-victory{    
+    background-image:url(./../../../../../assets/img/victory.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    border-radius:50%;
+    @include background-properties();
+}
+.background-defeat{    
+    background-image:url(./../../../../../assets/img/deafeat.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    border-radius:50%;
+    @include background-properties();
+}
+
+.shadow 
+{
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow: 0 0.5rem 1rem rgba(45,18,10,2.15)!important;
+}
+
+
+.card-user-info-gameplays
+{
+    padding: 10px 10px 0px 10px;
+    background-color: #2d3035;
+    color: #8a8d93;
+    margin-bottom: 9px;
+    border-radius: 5px;
+    color: #8a8d93;
+    border: 1px solid;
+    .title-card
+    {
+        display:flex;
+        width:100%;
+        margin-bottom:4px;
+        font-weight:500;
+        position: relative;
+        top: -17px;
+        .champion-column
+        {
+            flex-basis:144px;
+            text-align:center;
+        }
+        .spell-column
+        {
+            flex-basis:88px;
+            text-align:center;
+        }
+        .rune-column
+        {
+            flex-basis:61px;
+            text-align:center;
+        }
+        .gameplay-info-column
+        {
+            flex-basis:150px;
+            text-align:center;
+        }
+        .item-column
+        {
+            flex-basis:150px;
+            text-align:center;
+        }
+        .time-column
+        {
+            flex-basis: 352px;
+            text-align:center;
+        }
+    }
+    .content-info
+    {
+        display:flex;
+        width:100%;
+        .area-img
+        {
+            display:flex;
+            flex-direction: column;
+            flex-basis: 144px;
+            align-items:center;
+            div
+            {
+                
+                text-align:center;
+            }
+        }
+        .spell-area
+        {
+            display:flex;
+            flex-basis:88px;
+            flex-direction: column;
+            div
+            {
+                text-align: center;
+                margin:5px;
+                img{
+                    border: 2px solid;
+                    padding: 5px;
+                    border-radius:50%;
+                    cursor:pointer;
+                    &:hover{
+                        background-color: #1b1b1b;
+                        -webkit-filter: saturate(200%); /* Safari 6.0 - 9.0 */
+                        filter: saturate(200%);
+                        box-shadow: 0 4px 8px 0 #615454, 0 6px 20px 0 #8a7777;;
+                    }
+                }
+            }
+        }
+        .rune-area
+        {
+            display:flex;
+            flex-basis:61px;
+            flex-direction: column;
+            
+            div{
+                margin-top:5px;
+                margin-bottom:5px;
+                text-align: center;
+                img{
+                    width:50px;
+                    height:50px;
+                    border: 2px solid;
+                    border-radius: 50%;
+                    cursor:pointer;
+                    &:hover{
+                        background-color: #1b1b1b;
+                        -webkit-filter: saturate(200%); /* Safari 6.0 - 9.0 */
+                        filter: saturate(200%);
+                        box-shadow:0 4px 8px 0 #615454, 0 6px 20px 0 #8a7777;
+                    }
+                }
+            }
+        }
+        .match-info
+        {
+            flex-basis:150px;
+            flex-direction: column;
+            text-align: center;
+        }
+        .build-info
+        {
+            flex-basis:150px;
+            display:flex; 
+            flex-direction:row;
+            ul{
+                height:9em; 
+                margin-left: 26px;
+            }
+        }
+        .team-info
+        {
+            flex-basis: 352px;
+            display: flex;
+
+        }
+
+    }
+}
+.empty-item
+{
+    display:none;
+}
+.custom-scrool-bar::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+.custom-scrool-bar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    border-radius: 10px;
+}
+ 
+.custom-scrool-bar::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+//gold
+.gold-i-symbol{
+    background-image:url(./../../../../../assets/img/ranked/gold_i.png)
+}
+.gold-ii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/gold_ii.png)
+}
+
+.gold-iii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/gold_iii.png)
+}
+.gold-iv-symbol{
+    background-image:url(./../../../../../assets/img/ranked/gold_iv.png)
+}
+.gold-v-symbol{
+    background-image:url(./../../../../../assets/img/ranked/gold_v.png)
+}
+// bronze
+.bronze-i-symbol{
+    background-image:url(./../../../../../assets/img/ranked/bronze_i.png)
+}
+.bronze-ii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/bronze_ii.png)
+}
+
+.bronze-iii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/bronze_iii.png)
+}
+.bronze-iv-symbol{
+    background-image:url(./../../../../../assets/img/ranked/bronze_iv.png)
+}
+.bronze-v-symbol{
+    background-image:url(./../../../../../assets/img/ranked/bronze_v.png)
+}
+//diamond
+.diamond-i-symbol{
+    background-image:url(./../../../../../assets/img/ranked/diamond_i.png)
+}
+.diamond-ii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/diamond_ii.png)
+}
+
+.diamond-iii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/diamond_iii.png)
+}
+.diamond-iv-symbol{
+    background-image:url(./../../../../../assets/img/ranked/diamond_iv.png)
+}
+.diamond-v-symbol{
+    background-image:url(./../../../../../assets/img/ranked/diamond_v.png)
+}
+//platinum
+.platinum-i-symbol{
+    background-image:url(./../../../../../assets/img/ranked/platinum_i.png)
+}
+.platinum-ii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/platinum_ii.png)
+}
+
+.platinum-iii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/platinum_iii.png)
+}
+.platinum-iv-symbol{
+    background-image:url(./../../../../../assets/img/ranked/platinum_iv.png)
+}
+.platinum-v-symbol{
+    background-image:url(./../../../../../assets/img/ranked/platinum_v.png)
+}
+//silver
+.silver-i-symbol{
+    background-image:url(./../../../../../assets/img/ranked/silver_i.png)
+}
+.silver-ii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/silver_ii.png)
+}
+.silver-iii-symbol{
+    background-image:url(./../../../../../assets/img/ranked/silver_iii.png)
+}
+.silver-iv-symbol{
+    background-image:url(./../../../../../assets/img/ranked/silver_iv.png)
+}
+.silver-v-symbol{
+    background-image:url(./../../../../../assets/img/ranked/silver_v.png)
+}
+.class-ranqueada{
+    height: 80px;
+    width: 80px;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 1px solid #8a8d93
+}
+.timeline-icon{
+    float: right;
+    color: #868585;
+    border: 1px solid;
+    padding: 4px;
+    border-radius: 5px;
+    z-index: 73px!important;
+    position: relative;
+    font-size: 10px;
+    right: 0px;
+    top: -0px;
+    cursor: pointer;
+    &:hover{
+        background-color:#242121;
+    }
+}
+.title-team-detail
+{
+    text-align: center;
+    padding: 5px;
+    border: 1px solid;
+    border-radius: 32px;
+    margin-bottom: 5px;
+}

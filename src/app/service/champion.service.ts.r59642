@@ -1,0 +1,27 @@
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Injectable }     from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable()
+export class ChampionService
+{
+    public headers = new Headers();
+
+    constructor(public http:HttpClient
+    ){
+
+    }
+
+    public getChampionById(_id:string, ) : Observable<Champion>
+    {
+        return this.http.get<Champion>( 'http://localhost:8090/api/campeao/' + _id);
+    }
+}
+export class Champion
+{
+    public idCampeao :string;
+    public campeaoIdApi: number;
+    public nome: string;
+    public caminhoImagem:string;
+}

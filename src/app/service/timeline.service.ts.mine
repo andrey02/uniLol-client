@@ -1,0 +1,97 @@
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Injectable }     from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { forEach } from '@angular/router/src/utils/collection';
+
+@Injectable()
+export class TimeLineService
+{
+  
+    public headers = new Headers();
+
+    constructor(public http:HttpClient
+    ){
+
+    }
+
+    public getEventosDaPartida(_id:string, ) : Observable<EventoDaPartida[]>
+    {
+        return this.http.get<EventoDaPartida[]>( 'https://pgppain.uk/unilol/api/evento/' + _id);
+    }
+
+    getParticipantes(_id: string) : Observable<Participante[]>
+    {
+        return this.http.get<Participante[]>( 'https://pgppain.uk/unilol/api/partidadousuario/' + _id);
+    }
+
+    public getPosition(_matchId,_idUsuario) : Observable<number[][]>
+    {
+        return this.http.get<number[][]>( 'https://pgppain.uk/unilol/api/match/posicao/' + _matchId + '/' + _idUsuario);
+    }
+
+    public getGraphData(matchId : string, timelineData: string, participantId: number[]) : Observable<number[][]> {
+        let participantes : string = '';
+        participantId.forEach(element =>{
+            participantes += element + ",";
+        })
+        participantes = participantes.substring(0,participantes.lastIndexOf(','));
+        console.log(participantes);
+        
+        return this.http.get<number[][]>( 'https://pgppain.uk/unilol/api/timeline/grafico/' + matchId + '?participantId=' +participantes+'&timelineData='+timelineData);
+    }
+
+    
+}
+
+export class EventoDaPartida
+{
+    public idEventoPartida:number;
+    public tipo:string;
+    public killerId:number;
+    public victimId:number;
+    public posicaoX:number;
+    public posicaoY:number;
+    public tempo:number;
+    public assistentes:string;
+    public participantId:string;
+    public item:Array<{name:string,itemIdApi:string, caminhoImagem:string}>;
+    public time:string;
+    public skill:number;
+    public wardType:string;
+    public turretType: string;
+    public laneType: string;
+    public buildingtype: string;
+    public monsterSubType: string;
+}
+
+export class CampeaoDTO
+{
+    public nome:string;
+    public campeaoIdApi:string;
+    public caminhoImagem:string;
+}
+
+export class Participante {
+    public time:string;  // tipos de time 100 e 200
+    public campeao:CampeaoDTO;
+    public laneType:string;
+    public role: string;
+    public participantId:number;
+    public usuario: Usuario;
+    
+}
+
+export class Grafico {
+    public columnNames: Array<{name:string}>;
+    public arrayPosicao;
+}
+
+export class Usuario {
+    public idUsuario: number;
+    public accountId:string;
+    public nome:string;
+    public iconeUrl:string;
+    public status:number;
+    public regiao:string;
+}

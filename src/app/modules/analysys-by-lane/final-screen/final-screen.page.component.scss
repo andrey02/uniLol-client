@@ -1,0 +1,200 @@
+.content{
+    padding:20px;
+}
+
+.principal {
+    
+    border-radius: 2px;
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    background-color: #07021f6b;
+    border-radius: 17px;
+    border: 1px solid #785f5f;
+}
+
+.input {
+    border-radius: 6px;
+    color: #979a9f;
+    background-color: #212121;
+    padding-left: 10px;
+    border: 1px solid #444951;
+}
+
+
+.dica{
+    padding: 20px 20px 20px 20px;
+    background-color: #2d3035;
+    color: #8a8d93;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 100%;
+    color: #8a8d93;
+}
+.content-page {
+    padding: 10px 10px 0px 10px;
+    color: #ffffff;
+    margin-bottom: 9px;
+    border-radius: 5px;
+    border: 1px solid #785f5f;
+    border-radius: 10px;
+}
+
+.content-inside {
+    text-align: center;
+    border-radius: 2px;
+    padding: 10px 10px 10px 10px;
+    position: relative;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+    background-color: #07021f6b;
+    border-radius: 17px;
+    border: 1px solid #785f5f;
+}
+
+.titulo {
+    margin-bottom: 10px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #8af2fd;
+}
+
+.card-user-info-gameplays
+{
+    padding: 10px 10px 0px 10px;
+    background-color: #2d3035;
+    color: #8a8d93;
+    margin-bottom: 9px;
+    border-radius: 5px;
+    color: #8a8d93;
+    border: 1px solid;
+    .title-card
+    {
+        display:flex;
+        width:100%;
+        margin-bottom:4px;
+        font-weight:500;
+        position: relative;
+        top: -17px;
+        .champion-column
+        {
+            flex-basis:144px;
+            text-align:center;
+        }
+        .spell-column
+        {
+            flex-basis:88px;
+            text-align:center;
+        }
+        .rune-column
+        {
+            flex-basis:61px;
+            text-align:center;
+        }
+        .gameplay-info-column
+        {
+            flex-basis:150px;
+            text-align:center;
+        }
+        .item-column
+        {
+            flex-basis:150px;
+            text-align:center;
+        }
+        .time-column
+        {
+            flex-basis: 352px;
+            text-align:center;
+        }
+    }
+    .content-info
+    {
+        display:flex;
+        width:100%;
+        .area-img
+        {
+            display:flex;
+            flex-direction: column;
+            flex-basis: 144px;
+            align-items:center;
+            div
+            {
+                
+                text-align:center;
+            }
+        }
+        .spell-area
+        {
+            display:flex;
+            flex-basis:88px;
+            flex-direction: column;
+            div
+            {
+                text-align: center;
+                margin:5px;
+                img{
+                    border: 2px solid;
+                    padding: 5px;
+                    border-radius:50%;
+                    cursor:pointer;
+                    &:hover{
+                        background-color: #1b1b1b;
+                        -webkit-filter: saturate(200%); /* Safari 6.0 - 9.0 */
+                        filter: saturate(200%);
+                        box-shadow: 0 4px 8px 0 #615454, 0 6px 20px 0 #8a7777;;
+                    }
+                }
+            }
+        }
+        .rune-area
+        {
+            display:flex;
+            flex-basis:61px;
+            flex-direction: column;
+            
+            div{
+                margin-top:5px;
+                margin-bottom:5px;
+                text-align: center;
+                img{
+                    width:50px;
+                    height:50px;
+                    border: 2px solid;
+                    border-radius: 50%;
+                    cursor:pointer;
+                    &:hover{
+                        background-color: #1b1b1b;
+                        -webkit-filter: saturate(200%); /* Safari 6.0 - 9.0 */
+                        filter: saturate(200%);
+                        box-shadow:0 4px 8px 0 #615454, 0 6px 20px 0 #8a7777;
+                    }
+                }
+            }
+        }
+        .match-info
+        {
+            flex-basis:150px;
+            flex-direction: column;
+            text-align: center;
+        }
+        .build-info
+        {
+            flex-basis:150px;
+            display:flex; 
+            flex-direction:row;
+            ul{
+                height:9em; 
+                margin-left: 26px;
+            }
+        }
+        .team-info
+        {
+            flex-basis: 352px;
+            display: flex;
+
+        }
+
+    }
+}
